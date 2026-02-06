@@ -64,7 +64,7 @@ jobs:
         unzip openjfx-21.0.10_linux-x64_bin-sdk.zip -d javafx-sdk
 
     - name: Compilar
-      run: javac --module-path javafx-sdk/javafx-sdk-21.0.10/lib --add-modules javafx.controls -d build/ dam/optativa/HelloWorldFx.java
+      run: javac --module-path javafx-sdk/javafx-sdk-21.0.10/lib --add-modules javafx.controls -d build/ dam/optativa/HelloWorldFx.class
 
     - name: Crear JAR
       run: jar --create --file=build/HelloWorldFx.jar --manifest=manifest/MANIFEST.MF -C build/ .
