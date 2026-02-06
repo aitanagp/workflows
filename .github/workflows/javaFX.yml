@@ -32,6 +32,9 @@ jobs:
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+    
+    - name: Make gradlew executable
+      run: chmod +x gradlew
 
     - name: Build with Gradle Wrapper
       run: ./gradlew build
@@ -64,11 +67,12 @@ jobs:
     # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
     # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
     - name: Descargar JavaFx
-      run: Invoke-WebRequest -Uri https://download2.gluonhq.com/openjfx/21.0.10/openjfx-21.0.10_windows-x64_bin-sdk.zip -OutFile openjfx.zip
-          Expand-Archive -Path openjfx.zip -DestinationPath javafx-sdk
+      run: |
+        wget https://download2.gluonhq.com/openjfx/21.0.10/openjfx-21.0.10_linux-x64_bin-sdk.zip
+        unzip openjfx-21.0.10_linux-x64_bin-sdk.zip -d javafx-sdk
 
     - name: Compilar
-      run: javac --module-path javafx-sdk/javafx-sdk-21.0.10/lib --add-modules javafx.controls -d build/ src/dam/optativa/HelloWorldFx.java
+      run: javac --module-path <path_to_javafx_lib> --add-modules javafx.controls -d build/ src/dam/optativa/HelloWorldFx.java
 
     - name: Crear JAR
       run: jar --create --file=build/HelloWorldFx.jar --manifest=manifest/MANIFEST.MF -C build/ .
@@ -78,10 +82,9 @@ jobs:
 
     - name: Crear ejecutable
       run: |
-        jpackage --input build/ `
-            --name HelloWorldFx `
-            --main-jar HelloWorldFx.jar `
-            --main-class dam.optativa.HelloWorldFx `
-            --type exe `
-            --module-path javafx-sdk/javafx-sdk-21.0.10/lib `
-            --add-modules javafx.controls
+        jpackage --input build/ \
+          --name HelloWorldFx \
+          --main-jar HelloWorldFx.jar \
+          --main-class dam.optativa.HelloWorldFx \
+          --type deb \
+          --module-path path_to_javafx_lib --add-modules javafx.controls
