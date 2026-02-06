@@ -77,10 +77,11 @@ jobs:
       run: java --module-path javafx-sdk/javafx-sdk-21.0.10/lib --add-modules javafx.controls -jar build/HelloWorldFx.jar
 
     - name: Crear ejecutable
-      run: jpackage --input build/
-           name HelloWorldFx
-           main-jar HelloWorldFx.jar
-           main-class dam.optativa.HelloWorldFx
-           type exe
-           module-path javafx-sdk/javafx-sdk-21.0.10/lib
-           add-modules javafx.controls
+      run: |
+        jpackage --input build/ `
+            --name HelloWorldFx `
+            --main-jar HelloWorldFx.jar `
+            --main-class dam.optativa.HelloWorldFx `
+            --type exe `
+            --module-path javafx-sdk/javafx-sdk-21.0.10/lib `
+            --add-modules javafx.controls
