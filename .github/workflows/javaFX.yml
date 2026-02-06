@@ -79,9 +79,10 @@ jobs:
 
     - name: Crear ejecutable
       run: |
-        jpackage --input build/ \
-          --name HelloWorldFx \
-          --main-jar HelloWorldFx.jar \
-          --main-class dam.optativa.HelloWorldFx \
-          --type deb \
-          --module-path path_to_javafx_lib --add-modules javafx.controls
+        jpackage --input build/ `
+          --name HelloWorldFx `
+          --main-jar HelloWorldFx.jar `
+          --main-class dam.optativa.HelloWorldFx `
+          --type deb `
+          --module-path javafx-sdk/javafx-sdk-21.0.10/lib `
+          --add-modules javafx.controls
